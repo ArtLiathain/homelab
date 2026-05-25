@@ -27,7 +27,7 @@
   };
 
   users.groups.media = {
-    members = [ "art" "radarr" "sonarr" "prowlarr" "jellyfin" "lidarr" "sabnzbd" ];
+    members = [ "art" "radarr" "sonarr" "prowlarr" "jellyfin" "lidarr" "sabnzbd" "jellyseerr" ];
   };
 
   services.openssh = {
