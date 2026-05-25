@@ -27,7 +27,7 @@
   };
 
   users.groups.media = {
-    members = [ "art" "radarr" "sonarr" "prowlarr" "jellyfin" "qbittorrent" "lidarr"];
+    members = [ "art" "radarr" "sonarr" "prowlarr" "jellyfin" "lidarr" "sabnzbd" ];
   };
 
   services.openssh = {
@@ -43,11 +43,13 @@
 
   systemd.tmpfiles.rules = [
     "d /data 2775 art media - -"
-    "d /data/torrents 2775 art media - -"
-    "d /data/torrents/movies 2775 art media - -"
-    "d /data/torrents/tv 2775 art media - -"
-    "d /data/torrents/music 2775 art media - -"
-    "d /data/torrents/books 2775 art media - -"
+    "d /data/usenet 2775 art media - -"
+    "d /data/usenet/incomplete 2775 art media - -"
+    "d /data/usenet/complete 2775 art media - -"
+    "d /data/usenet/complete/movies 2775 art media - -"
+    "d /data/usenet/complete/tv 2775 art media - -"
+    "d /data/usenet/complete/music 2775 art media - -"
+    "d /data/usenet/complete/books 2775 art media - -"
     "d /data/media 2775 art media - -"
     "d /data/media/movies 2775 art media - -"
     "d /data/media/tv 2775 art media - -"

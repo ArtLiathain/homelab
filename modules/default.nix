@@ -1,7 +1,7 @@
 {
   imports = [
     ./tailscale.nix
-    ./qbittorrent.nix
+    ./sabnzbd.nix
     ./prowlarr.nix
     ./sonarr.nix
     ./radarr.nix
