@@ -27,7 +27,7 @@
   };
 
   users.groups.media = {
-    members = [ "art" "radarr" "sonarr" "prowlarr" ];
+    members = [ "art" "radarr" "sonarr" "prowlarr" "jellyfin" "qbittorrent" "lidarr"];
   };
 
   services.openssh = {
@@ -43,6 +43,16 @@
 
   systemd.tmpfiles.rules = [
     "d /data 2775 art media - -"
+    "d /data/torrents 2775 art media - -"
+    "d /data/torrents/movies 2775 art media - -"
+    "d /data/torrents/tv 2775 art media - -"
+    "d /data/torrents/music 2775 art media - -"
+    "d /data/torrents/books 2775 art media - -"
+    "d /data/media 2775 art media - -"
+    "d /data/media/movies 2775 art media - -"
+    "d /data/media/tv 2775 art media - -"
+    "d /data/media/music 2775 art media - -"
+    "d /data/media/books 2775 art media - -"
   ];
 
   networking.firewall.allowedUDPPorts = [ 41641 ];

@@ -6,5 +6,6 @@
     ./sonarr.nix
     ./radarr.nix
     ./jellyfin.nix
+    ./lidarr.nix
   ];
 }
