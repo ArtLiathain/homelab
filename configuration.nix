@@ -41,6 +41,7 @@
     git
   ];
 
+  nixpkgs.config.allowUnfree = true;
   systemd.tmpfiles.rules = [
     "d /data 2775 art media - -"
     "d /data/usenet 2775 art media - -"
