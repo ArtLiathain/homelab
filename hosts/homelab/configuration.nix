@@ -2,23 +2,15 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
-    ./modules
+    ./hardware.nix
+    ../../modules/core
+    ../../modules/homelab
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   networking.hostName = "homelab";
-  networking.networkmanager.enable = true;
-
-  time.timeZone = "Europe/Dublin";
-
-  i18n.defaultLocale = "en_IE.UTF-8";
 
   users.users.art = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "media" ];
+    extraGroups = [ "media" ];
     packages = with pkgs; [ tree ];
     hashedPasswordFile = "/etc/nixos/art-password";
     openssh.authorizedKeys.keys = [
@@ -30,18 +22,6 @@
     members = [ "art" "radarr" "sonarr" "prowlarr" "jellyfin" "lidarr" "sabnzbd" "jellyseerr" ];
   };
 
-  services.openssh = {
-    enable = true;
-    settings = {};
-  };
-
-  environment.systemPackages = with pkgs; [
-    neovim
-    wget
-    git
-  ];
-
-  nixpkgs.config.allowUnfree = true;
   systemd.tmpfiles.rules = [
     "d /data 2775 art media - -"
     "d /data/usenet 2775 art media - -"
@@ -59,6 +39,8 @@
   ];
 
   networking.firewall.allowedUDPPorts = [ 41641 ];
+
+  virtualisation.docker.enable = true;
 
   system.stateVersion = "25.11";
 }
