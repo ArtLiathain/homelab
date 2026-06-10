@@ -30,4 +30,9 @@
     curl
     wget
   ];
+imports =[
+    ./tailscale.nix
+]
 }
+
+

@@ -1,6 +1,5 @@
 {
   imports = [
-    ./tailscale.nix
     ./sabnzbd.nix
     ./prowlarr.nix
     ./sonarr.nix

@@ -1,0 +1,20 @@
+$wallpaper= {{wallpaper}}
+$foregroundCol = 0xff{{foreground | replace("#", "") }}
+$backgroundCol = 0xff{{background | replace("#", "") }}
+$color0 = 0xff{{color0 | replace("#", "") }}
+$color1 = 0xff{{color1 | replace("#", "") }}
+$color2 = 0xff{{color2 | replace("#", "") }}
+$color3 = 0xff{{color3 | replace("#", "") }}
+$color4 = 0xff{{color4 | replace("#", "") }}
+$color5 = 0xff{{color5 | replace("#", "") }}
+$color6 = 0xff{{color6 | replace("#", "") }}
+$color7 = 0xff{{color7 | replace("#", "") }}
+$color8 = 0xff{{color8 | replace("#", "") }}
+$color9 = 0xff{{color9 | replace("#", "") }}
+$color10 = 0xff{{color10 | replace("#", "") }}
+$color11 = 0xff{{color11 | replace("#", "") }}
+$color12 = 0xff{{color12 | replace("#", "") }}
+$color13 = 0xff{{color13 | replace("#", "") }}
+$color14 = 0xff{{color14 | replace("#", "") }}
+$color15 = 0xff{{color15 | replace("#", "") }}
+

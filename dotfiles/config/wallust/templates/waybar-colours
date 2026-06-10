@@ -1,0 +1,58 @@
+/* NOTE: This file is managed by Wallust. Do not edit manually. */
+
+/* 1. Direct ANSI Mappings */
+@define-color color0  {{color0}};
+@define-color color1  {{color1}};
+@define-color color2  {{color2}};
+@define-color color3  {{color3}};
+@define-color color4  {{color4}};
+@define-color color5  {{color5}};
+@define-color color6  {{color6}};
+@define-color color7  {{color7}};
+@define-color color8  {{color8}};
+@define-color color9  {{color9}};
+@define-color color10 {{color10}};
+@define-color color11 {{color11}};
+@define-color color12 {{color12}};
+@define-color color13 {{color13}};
+@define-color color14 {{color14}};
+@define-color color15 {{color15}};
+
+/* 2. Recreating your "Catppuccin Groups" with Wallust slots */
+
+/* Base layers */
+@define-color base      {{background}};   /* The main background */
+@define-color mantle    {{color1}};       /* Darker UI elements */
+@define-color crust     {{color8}};       /* Deepest contrast */
+@define-color surface0  {{color4}};      /* Lighter UI surfaces */
+@define-color surface1  {{color9}};      /* Lighter UI surfaces */
+@define-color text      {{foreground}};   /* Primary text */
+@define-color subtext0  {{color7}};       /* Secondary text */
+
+/* 3. Main UI Variables (Matching your previous logic) */
+@define-color accent    {{color12}};      /* Replaces @lavender */
+@define-color main-br   @subtext0;
+@define-color main-bg   @base;
+@define-color main-fg   @text;
+
+/* 4. Grouped Module Mappings */
+
+/* These all used @mantle before */
+@define-color workspaces  @surface1;
+@define-color temperature @mantle;
+@define-color tray         @mantle;
+@define-color volume       @mantle;
+
+/* These all used @base before */
+@define-color memory      @surface1;
+@define-color date        @surface1;
+@define-color backlight   @surface1;
+
+/* These all used @surface0 before */
+@define-color cpu         @surface0;
+@define-color time        @surface0;
+@define-color battery     @surface0;
+
+/* State colors */
+@define-color warning     {{color3}};     /* Yellow/Orange slot */
+@define-color critical    {{color1}};     /* Red slot */

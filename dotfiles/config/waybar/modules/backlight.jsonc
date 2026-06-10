@@ -1,0 +1,13 @@
+{"custom/backlight": {
+    "format": "{icon} {percentage}%",
+    "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "return-type": "json",
+    // We call the script with 'get' to receive the {"percentage": X} JSON
+    "exec": "~/.config/waybar/scripts/backlight.sh get",
+    "on-scroll-up": "~/.config/waybar/scripts/backlight.sh up",
+    "on-scroll-down": "~/.config/waybar/scripts/backlight.sh down",
+    // This signal (10) allows the script to force-refresh the bar instantly
+    "signal": 10, 
+    "tooltip": false
+}
+}

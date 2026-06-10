@@ -1,0 +1,20 @@
+$wallpaper= /home/art/.cache/converted_wallpapers/active_wallpaper.jpeg
+$foregroundCol = 0xffE9FCFB
+$backgroundCol = 0xff0F0000
+$color0 = 0xff120000
+$color1 = 0xff5E7A75
+$color2 = 0xff7E7872
+$color3 = 0xff6B8271
+$color4 = 0xffA06864
+$color5 = 0xffAA9E8B
+$color6 = 0xff90B9B7
+$color7 = 0xffD7F3F1
+$color8 = 0xff96AAA9
+$color9 = 0xff5A847D
+$color10 = 0xff8B8178
+$color11 = 0xff84A48D
+$color12 = 0xffD68A85
+$color13 = 0xffE2D3BA
+$color14 = 0xffC0F7F4
+$color15 = 0xffD7F3F1
+

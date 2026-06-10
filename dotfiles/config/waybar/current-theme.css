@@ -1,0 +1,58 @@
+/* NOTE: This file is managed by Wallust. Do not edit manually. */
+
+/* 1. Direct ANSI Mappings */
+@define-color color0  #120000;
+@define-color color1  #5E7A75;
+@define-color color2  #7E7872;
+@define-color color3  #6B8271;
+@define-color color4  #A06864;
+@define-color color5  #AA9E8B;
+@define-color color6  #90B9B7;
+@define-color color7  #D7F3F1;
+@define-color color8  #96AAA9;
+@define-color color9  #5A847D;
+@define-color color10 #8B8178;
+@define-color color11 #84A48D;
+@define-color color12 #D68A85;
+@define-color color13 #E2D3BA;
+@define-color color14 #C0F7F4;
+@define-color color15 #D7F3F1;
+
+/* 2. Recreating your "Catppuccin Groups" with Wallust slots */
+
+/* Base layers */
+@define-color base      #0F0000;   /* The main background */
+@define-color mantle    #5E7A75;       /* Darker UI elements */
+@define-color crust     #96AAA9;       /* Deepest contrast */
+@define-color surface0  #A06864;      /* Lighter UI surfaces */
+@define-color surface1  #5A847D;      /* Lighter UI surfaces */
+@define-color text      #E9FCFB;   /* Primary text */
+@define-color subtext0  #D7F3F1;       /* Secondary text */
+
+/* 3. Main UI Variables (Matching your previous logic) */
+@define-color accent    #D68A85;      /* Replaces @lavender */
+@define-color main-br   @subtext0;
+@define-color main-bg   @base;
+@define-color main-fg   @text;
+
+/* 4. Grouped Module Mappings */
+
+/* These all used @mantle before */
+@define-color workspaces  @surface1;
+@define-color temperature @mantle;
+@define-color tray         @mantle;
+@define-color volume       @mantle;
+
+/* These all used @base before */
+@define-color memory      @surface1;
+@define-color date        @surface1;
+@define-color backlight   @surface1;
+
+/* These all used @surface0 before */
+@define-color cpu         @surface0;
+@define-color time        @surface0;
+@define-color battery     @surface0;
+
+/* State colors */
+@define-color warning     #6B8271;     /* Yellow/Orange slot */
+@define-color critical    #5E7A75;     /* Red slot */
