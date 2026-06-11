@@ -3,6 +3,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
+nixConfig.submodule = true;
+
   outputs = { nixpkgs, ... }: {
     nixosConfigurations = {
       homelab = nixpkgs.lib.nixosSystem {
