@@ -150,7 +150,7 @@ system.activationScripts.zz-deploy-dotfiles = ''
 '';
 
 system.activationScripts.zz-run-wallust = ''
-    ${pkgs.su}/bin/su - art -c "${pkgs.bash}/bin/bash /home/art/scripts/set-wallpaper.sh /home/art/wallpapers/default_wallpaper.jpg"
+    ${pkgs.su}/bin/su - art -c "${pkgs.bash}/bin/bash /home/art/scripts/set_wallpaper.sh /home/art/wallpapers/default_wallpaper.jpg"
     '';
 
 
