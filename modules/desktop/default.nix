@@ -132,7 +132,7 @@ nerd-fonts.jetbrains-mono
 
   services.xserver.excludePackages = [ pkgs.xterm ];
 
-system.activationScripts.deploy-dotfiles = ''
+system.activationScripts.zz-deploy-dotfiles = ''
   # On first boot only: copy the submodule from the Nix store to ~/dotfiles/
   # This preserves the .git/ so you can commit + push from inside the VM
   if [ ! -d /home/art/dotfiles/.git ]; then
@@ -149,7 +149,7 @@ system.activationScripts.deploy-dotfiles = ''
   chown -R art:users /home/art
 '';
 
-system.activationScripts.run-wallust = ''
+system.activationScripts.zz-run-wallust = ''
     ${pkgs.su}/bin/su - art -c "${pkgs.bash}/bin/bash /home/art/scripts/set-wallpaper.sh /home/art/wallpapers/default_wallpaper.jpg"
     '';
 
