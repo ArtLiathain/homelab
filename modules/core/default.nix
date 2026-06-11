@@ -19,7 +19,6 @@
   };
 
 gtk = {
-  enable = true;
   gtk3.extraCss = "";
   gtk4.extraCss = "";
   gtk3.extraConfig = {
