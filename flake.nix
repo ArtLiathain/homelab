@@ -3,6 +3,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
         dotfiles.url = "path:./dotfiles";
     dotfiles.flake = false;
+self.submodules = true;
   };
 
 
