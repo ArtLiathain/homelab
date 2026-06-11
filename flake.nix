@@ -1,13 +1,10 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-dotfiles = {
-    url = "git+file:./dotfiles?submodules=1";
-    flake = false;
-  };  };
+  };  
 
 
-  outputs = { nixpkgs, dotfiles, ... }: {
+  outputs = {self, nixpkgs, ... }: {
     nixosConfigurations = {
       homelab = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
