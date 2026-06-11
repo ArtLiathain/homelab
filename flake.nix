@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 self.submodules = true;
-        dotfiles.url = "path:./dotfiles";
+dotfiles.url = "path:./dotfiles";
     dotfiles.flake = false;
   };
 
