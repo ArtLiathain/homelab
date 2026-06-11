@@ -72,6 +72,7 @@ services.displayManager.defaultSession = "hyprland";
     brave
     obsidian
     wezterm
+    kitty
     vesktop
     zoom-us
     spotify
@@ -132,8 +133,8 @@ nerd-fonts.jetbrains-mono
   services.xserver.excludePackages = [ pkgs.xterm ];
 
 system.activationScripts.stow-dotfiles = ''
-  ${pkgs.stow}/bin/stow --adopt -d ${../../dotfiles/config} -t /home/art/.config .
-  ${pkgs.stow}/bin/stow --adopt -d ${../../dotfiles/home} -t /home/art .
+  ${pkgs.stow}/bin/stow -d ${../../dotfiles/config} -t /home/art/.config .
+  ${pkgs.stow}/bin/stow -d ${../../dotfiles/home} -t /home/art .
   chown -R art:users /home/art
 '';
 
