@@ -1,9 +1,9 @@
-{ config, pkgs, lib, hyprland, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   programs.hyprland = {
     enable = true;
-    package = hyprland.packages.${pkgs.system}.hyprland;
+    package = pkgs.hyprland;
     portalPackage = pkgs.xdg-desktop-portal-hyprland;
   };
 
@@ -43,12 +43,11 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    noto-fonts-extra
+    noto-fonts-color-emoji
     dejavu_fonts
     font-awesome
-    (nerdfonts.override { fonts = [ "JetBrainsMono" "Hack" ]; })
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.hack
     material-design-icons
   ];
 

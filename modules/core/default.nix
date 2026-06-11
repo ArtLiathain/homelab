@@ -16,12 +16,12 @@
 
   services.openssh = {
     enable = true;
-    settings = {};
   };
 
+  programs.zsh.enable = true;
   users.users.art = {
-    isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
+    shell = pkgs.zsh;
   };
 
   environment.systemPackages = with pkgs; [
@@ -32,7 +32,7 @@
   ];
 imports =[
     ./tailscale.nix
-]
+];
 }
 
 

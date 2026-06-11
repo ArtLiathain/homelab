@@ -6,11 +6,9 @@
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     substituters = [
-      "https://hyprland.cachix.org"
       "https://nix-community.cachix.org"
     ];
     trusted-public-keys = [
-      "hyprland.cachix.org-1:a7PGxz3DzunS2JcK4WtmBv0F79QJfAT1KSSDgm5gB2k="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };
@@ -21,11 +19,20 @@
     options = "--delete-older-than 30d";
   };
 
+  users.mutableUsers = false;
+
+  programs.zsh.enable = true;
   users.users.art = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" "video" "audio" ];
-    shell = pkgs.zsh;
+    hashedPassword = "$6$sTFYLSFGY/D7LIJ9$9bVUCMuMwjoqExwlKm71oqiyRUfWZnTfxMZas36NIexGBAqeiBC4L4YJ8rZHRnyqgfcyxMvU4S8xQGw3Lb8RJ0";
   };
+services.xserver.enable = true;
+services.displayManager.sddm = {
+  enable = true;
+  wayland.enable = true;
+};
+services.displayManager.defaultSession = "hyprland";
 
   environment.systemPackages = with pkgs; [
     # CLI
@@ -47,6 +54,7 @@
     zip
     unzip
     p7zip
+    stow
 
     # Development
     bun
@@ -58,6 +66,7 @@
     ninja
     python3
     rustup
+    opencode
 
     # Desktop
     brave
@@ -68,16 +77,13 @@
     spotify
     spotify-player
     zathura
-    zathura_pdf_mupdf
     obs-studio
-    kdenlive
+    kdePackages.kdenlive
     prusa-slicer
-    libreoffice-fresh
     ghostscript
     ffmpeg
 
     # Media / Graphics
-    android-file-transfer
     grim
     imagemagick
     pavucontrol
@@ -86,11 +92,10 @@
     swappy
 
     # Theming
-    catppuccin-gtk
     hyprcursor
     hyprpaper
     mako
-    rofi-wayland
+    rofi
     wallust
     waybar
     wofi
@@ -109,12 +114,11 @@
 
   fonts.packages = with pkgs; [
     noto-fonts
-    noto-fonts-cjk
-    noto-fonts-emoji
-    noto-fonts-extra
+    noto-fonts-color-emoji
     dejavu_fonts
     font-awesome
-    (nerdfonts.override { fonts = [ "JetBrainsMono" "Hack" ]; })
+nerd-fonts.jetbrains-mono
+    nerd-fonts.hack
     material-design-icons
     nerd-fonts.jetbrains-mono
   ];
@@ -126,4 +130,16 @@
   };
 
   services.xserver.excludePackages = [ pkgs.xterm ];
+
+system.activationScripts.stow-dotfiles = ''
+  ${pkgs.stow}/bin/stow --adopt -d ${../../dotfiles/config} -t /home/art/.config .
+  ${pkgs.stow}/bin/stow --adopt -d ${../../dotfiles/home} -t /home/art .
+  chown -R art:users /home/art
+'';
+
+system.activationScripts.run-wallust = ''
+    ${pkgs.su}/bin/su - art -c "${pkgs.bash}/bin/bash /home/art/scripts/set-wallpaper.sh /home/art/wallpapers/default_wallpaper.jpg"
+    '';
+
+
 }
