@@ -132,9 +132,20 @@ nerd-fonts.jetbrains-mono
 
   services.xserver.excludePackages = [ pkgs.xterm ];
 
-system.activationScripts.stow-dotfiles = ''
-  ${pkgs.stow}/bin/stow -d ${../../dotfiles/config} -t /home/art/.config .
-  ${pkgs.stow}/bin/stow -d ${../../dotfiles/home} -t /home/art .
+system.activationScripts.deploy-dotfiles = ''
+  # On first boot only: copy the submodule from the Nix store to ~/dotfiles/
+  # This preserves the .git/ so you can commit + push from inside the VM
+  if [ ! -d /home/art/dotfiles/.git ]; then
+    rm -rf /home/art/dotfiles
+    cp -r ${../../dotfiles} /home/art/.dotfiles
+    cd /home/art/.dotfiles
+    git remote add origin git@github.com:ArtLiathain/dotfiles.git
+    chown -R art:users /home/art/.dotfiles
+  fi
+  mkdir -p /home/art/.config /home/art/scripts /home/art/wallpapers
+  # Stow from the writable copy — symlinks to ~/dotfiles/
+  ${pkgs.stow}/bin/stow --restow -d /home/art/.dotfiles/config -t /home/art/.config .
+  ${pkgs.stow}/bin/stow --restow -d /home/art/.dotfiles/home -t /home/art .
   chown -R art:users /home/art
 '';
 
