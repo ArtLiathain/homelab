@@ -7,6 +7,7 @@
 
 
   outputs = { nixpkgs, dotfiles, ... }: {
+        submodules = true;
     nixosConfigurations = {
       homelab = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
