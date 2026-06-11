@@ -57,5 +57,4 @@
     serif = [ "Noto Serif" "DejaVu Serif" ];
   };
 
-environment.etc."hypr/hyprland.conf".source = ../../dotfiles/config/hypr/hyprland.conf;
 }
