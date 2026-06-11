@@ -1,9 +1,10 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+dotfiles.url = "path:./dotfiles";
+    dotfiles.flake = false;
   };
 
-nixConfig.submodule = true;
 
   outputs = { nixpkgs, ... }: {
     nixosConfigurations = {
