@@ -20,17 +20,6 @@
     enable = true;
   };
 
-gtk = {
-  gtk3.extraCss = "";
-  gtk4.extraCss = "";
-  gtk3.extraConfig = {
-    gtk-application-prefer-dark-theme = 1;
-  };
-  gtk4.extraConfig = {
-    gtk-application-prefer-dark-theme = 1;
-  };
-};
-
   programs.zsh.enable = true;
   users.users.art = {
     extraGroups = [ "wheel" "networkmanager" ];
