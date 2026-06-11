@@ -1,10 +1,10 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-self.submodules = true;
-dotfiles.url = "path:./dotfiles";
-    dotfiles.flake = false;
-  };
+dotfiles = {
+    url = "git+file:./dotfiles?submodules=1";
+    flake = false;
+  };  };
 
 
   outputs = { nixpkgs, dotfiles, ... }: {

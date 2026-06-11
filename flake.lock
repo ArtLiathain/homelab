@@ -3,14 +3,20 @@
     "dotfiles": {
       "flake": false,
       "locked": {
-        "path": "./dotfiles",
-        "type": "path"
+        "lastModified": 1781179010,
+        "narHash": "sha256-dsWz8v3Y7+WROD0tfIeUQXXSgdBWTWBtArbciCb2A0M=",
+        "ref": "refs/heads/main",
+        "rev": "f8e2ff1fc40a6e2df48966848bac41d663b29c12",
+        "revCount": 4,
+        "submodules": true,
+        "type": "git",
+        "url": "file:./dotfiles"
       },
       "original": {
-        "path": "./dotfiles",
-        "type": "path"
-      },
-      "parent": []
+        "submodules": true,
+        "type": "git",
+        "url": "file:./dotfiles"
+      }
     },
     "nixpkgs": {
       "locked": {
