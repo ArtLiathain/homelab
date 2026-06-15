@@ -55,17 +55,24 @@ services.displayManager.defaultSession = "hyprland";
     unzip
     p7zip
     stow
+    ripgrep
+    zoxide
 
     # Development
     bun
     check
     clang
     cmake
+    go
     llvm
     meson
     ninja
+    cargo
+    clippy
+    nodejs_22
     python3
-    rustup
+    rustc
+    rustfmt
     opencode
 
     # Desktop
@@ -96,6 +103,7 @@ services.displayManager.defaultSession = "hyprland";
     hyprcursor
     hyprpaper
     mako
+    papirus-icon-theme
     rofi
     wallust
     waybar
@@ -133,24 +141,33 @@ nerd-fonts.jetbrains-mono
   services.xserver.excludePackages = [ pkgs.xterm ];
 
 system.activationScripts.zz-deploy-dotfiles = ''
-  # On first boot only: copy the submodule from the Nix store to ~/dotfiles/
-  # This preserves the .git/ so you can commit + push from inside the VM
-  if [ ! -d /home/art/dotfiles/.git ]; then
+  # On first boot only: copy the submodule from the Nix store to ~/.dotfiles/
+  # then init a git repo so you can commit + push from inside the VM
+  if [ ! -d /home/art/.dotfiles ]; then
+    FOLDER_NAME=''$(basename "${../../dotfiles}")
     rm -rf /home/art/dotfiles
     cp -r ${../../dotfiles} /home/art/.dotfiles
     cd /home/art/.dotfiles
+    mv "''${FOLDER_NAME}"/* .
+    rm -rf "''${FOLDER_NAME}"
+    rm -rf .git
+    rm -rf /home/art/.config
+    git init --initial-branch=main
+    git add -A
+    git commit -m "Initial deploy"
     git remote add origin git@github.com:ArtLiathain/dotfiles.git
     chown -R art:users /home/art/.dotfiles
+    chmod -R u+rwx /home/art/.dotfiles
   fi
   mkdir -p /home/art/.config /home/art/scripts /home/art/wallpapers
   # Stow from the writable copy — symlinks to ~/dotfiles/
-  ${pkgs.stow}/bin/stow --restow -d /home/art/.dotfiles/config -t /home/art/.config .
-  ${pkgs.stow}/bin/stow --restow -d /home/art/.dotfiles/home -t /home/art .
+  ${pkgs.stow}/bin/stow --adopt --restow -d /home/art/.dotfiles/config -t /home/art/.config .
+  ${pkgs.stow}/bin/stow --adopt --restow -d /home/art/.dotfiles/home -t /home/art .
   chown -R art:users /home/art
 '';
 
 system.activationScripts.zz-run-wallust = ''
-    ${pkgs.su}/bin/su - art -c "${pkgs.bash}/bin/bash /home/art/scripts/set_wallpaper.sh /home/art/wallpapers/default_wallpaper.jpg"
+    ${pkgs.su}/bin/su - art -c "${pkgs.bash}/bin/bash /home/art/scripts/process_wallpaper.sh /home/art/wallpapers/default_wallpaper.jpg"
     '';
 
 

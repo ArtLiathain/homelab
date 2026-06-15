@@ -15,9 +15,18 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  programs.nix-ld.enable = true;
 
   services.openssh = {
     enable = true;
+  };
+
+  programs.git = {
+    enable = true;
+    config = {
+      user.name = "ArtLiathain";
+      user.email = "artp.oliathain@gmail.com";
+    };
   };
 
   programs.zsh.enable = true;

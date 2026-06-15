@@ -12,6 +12,7 @@
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     XCURSOR_SIZE = "24";
+    XCURSOR_THEME = "Papirus";
   };
 
   xdg.portal = {
