@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   programs.hyprland = {
@@ -22,8 +27,9 @@
       xdg-desktop-portal-hyprland
     ];
     configPackages = [ pkgs.xdg-desktop-portal-hyprland ];
-  };
 
+    config.common.default = "*";
+  };
   security.polkit.enable = true;
 
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
@@ -52,9 +58,18 @@
   ];
 
   fonts.fontconfig.defaultFonts = {
-    monospace = [ "JetBrainsMono Nerd Font" "Hack Nerd Font" ];
-    sansSerif = [ "Noto Sans" "DejaVu Sans" ];
-    serif = [ "Noto Serif" "DejaVu Serif" ];
+    monospace = [
+      "JetBrainsMono Nerd Font"
+      "Hack Nerd Font"
+    ];
+    sansSerif = [
+      "Noto Sans"
+      "DejaVu Sans"
+    ];
+    serif = [
+      "Noto Serif"
+      "DejaVu Serif"
+    ];
   };
 
 }

@@ -1,10 +1,18 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   nixpkgs.config.allowUnfree = true;
 
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     substituters = [
       "https://nix-community.cachix.org"
     ];
@@ -24,15 +32,20 @@
   programs.zsh.enable = true;
   users.users.art = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "video" "audio" ];
+    extraGroups = [
+      "wheel"
+      "docker"
+      "video"
+      "audio"
+    ];
     hashedPassword = "$6$sTFYLSFGY/D7LIJ9$9bVUCMuMwjoqExwlKm71oqiyRUfWZnTfxMZas36NIexGBAqeiBC4L4YJ8rZHRnyqgfcyxMvU4S8xQGw3Lb8RJ0";
   };
-services.xserver.enable = true;
-services.displayManager.sddm = {
-  enable = true;
-  wayland.enable = true;
-};
-services.displayManager.defaultSession = "hyprland";
+  services.xserver.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
+  services.displayManager.defaultSession = "hyprland";
 
   environment.systemPackages = with pkgs; [
     # CLI
@@ -55,24 +68,37 @@ services.displayManager.defaultSession = "hyprland";
     unzip
     p7zip
     stow
-    ripgrep
     zoxide
+    yazi
 
     # Development
+    bash-language-server
     bun
     check
     clang
+    clang-tools
     cmake
-    go
+    delve
+    gopls
     llvm
+    lua-language-server
+    marksman
     meson
+    nil
     ninja
-    cargo
-    clippy
-    nodejs_22
+    omnisharp-roslyn
+    pyright
     python3
-    rustc
-    rustfmt
+    rust-analyzer
+    rustup
+    stylua
+    taplo
+    tinymist
+    typescript-language-server
+    ripgrep
+    vscode-langservers-extracted
+    yaml-language-server
+    zls
     opencode
 
     # Desktop
@@ -103,7 +129,6 @@ services.displayManager.defaultSession = "hyprland";
     hyprcursor
     hyprpaper
     mako
-    papirus-icon-theme
     rofi
     wallust
     waybar
@@ -126,49 +151,55 @@ services.displayManager.defaultSession = "hyprland";
     noto-fonts-color-emoji
     dejavu_fonts
     font-awesome
-nerd-fonts.jetbrains-mono
+    nerd-fonts.jetbrains-mono
     nerd-fonts.hack
     material-design-icons
     nerd-fonts.jetbrains-mono
   ];
 
   fonts.fontconfig.defaultFonts = {
-    monospace = [ "JetBrainsMono Nerd Font" "Hack Nerd Font" ];
-    sansSerif = [ "Noto Sans" "DejaVu Sans" ];
-    serif = [ "Noto Serif" "DejaVu Serif" ];
+    monospace = [
+      "JetBrainsMono Nerd Font"
+      "Hack Nerd Font"
+    ];
+    sansSerif = [
+      "Noto Sans"
+      "DejaVu Sans"
+    ];
+    serif = [
+      "Noto Serif"
+      "DejaVu Serif"
+    ];
   };
 
   services.xserver.excludePackages = [ pkgs.xterm ];
 
-system.activationScripts.zz-deploy-dotfiles = ''
-  # On first boot only: copy the submodule from the Nix store to ~/.dotfiles/
-  # then init a git repo so you can commit + push from inside the VM
-  if [ ! -d /home/art/.dotfiles ]; then
-    FOLDER_NAME=''$(basename "${../../dotfiles}")
-    rm -rf /home/art/dotfiles
-    cp -r ${../../dotfiles} /home/art/.dotfiles
-    cd /home/art/.dotfiles
-    mv "''${FOLDER_NAME}"/* .
-    rm -rf "''${FOLDER_NAME}"
-    rm -rf .git
-    rm -rf /home/art/.config
-    git init --initial-branch=main
-    git add -A
-    git commit -m "Initial deploy"
-    git remote add origin git@github.com:ArtLiathain/dotfiles.git
-    chown -R art:users /home/art/.dotfiles
-    chmod -R u+rwx /home/art/.dotfiles
-  fi
-  mkdir -p /home/art/.config /home/art/scripts /home/art/wallpapers
-  # Stow from the writable copy — symlinks to ~/dotfiles/
-  ${pkgs.stow}/bin/stow --adopt --restow -d /home/art/.dotfiles/config -t /home/art/.config .
-  ${pkgs.stow}/bin/stow --adopt --restow -d /home/art/.dotfiles/home -t /home/art .
-  chown -R art:users /home/art
-'';
+  system.activationScripts.zz-deploy-dotfiles = ''
+    DOTFILES_DIR="/home/art/.dotfiles"
+    DOTFILES_REPO="https://github.com/ArtLiathain/dotfiles.git"
 
-system.activationScripts.zz-run-wallust = ''
+    if [ ! -d "$DOTFILES_DIR/.git" ]; then
+      rm -rf "$DOTFILES_DIR"
+      ${pkgs.git}/bin/git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
+      cd "$DOTFILES_DIR"
+      ${pkgs.git}/bin/git remote set-url origin git@github.com:ArtLiathain/dotfiles.git
+      chown -R art:users "$DOTFILES_DIR"
+    fi
+
+    cd "$DOTFILES_DIR"
+    ${pkgs.git}/bin/git diff --quiet && ${pkgs.git}/bin/git pull --ff-only || true
+
+    # Ensure scripts are executable (git doesn't reliably track permissions)
+    chmod +x "$DOTFILES_DIR/home/scripts"/*.sh
+
+    mkdir -p /home/art/.config /home/art/scripts /home/art/wallpapers
+    ${pkgs.stow}/bin/stow --adopt --restow -d "$DOTFILES_DIR/config" -t /home/art/.config .
+    ${pkgs.stow}/bin/stow --adopt --restow -d "$DOTFILES_DIR/home" -t /home/art .
+    chown -R art:users /home/art
+  '';
+
+  system.activationScripts.zz-run-wallust = ''
     ${pkgs.su}/bin/su - art -c "${pkgs.bash}/bin/bash /home/art/scripts/process_wallpaper.sh /home/art/wallpapers/default_wallpaper.jpg"
-    '';
-
+  '';
 
 }
