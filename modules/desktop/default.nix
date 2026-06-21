@@ -6,6 +6,10 @@
 }:
 
 {
+  imports = [
+    ./theming.nix
+  ];
+
   nixpkgs.config.allowUnfree = true;
 
   nix.settings = {
