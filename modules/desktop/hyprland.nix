@@ -14,13 +14,25 @@
   };
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gtk
+    ];
+    config.common = {
+      default = [
+        "gtk"
+      ];
+      # This is what makes dark-mode detection work in Brave/Chromium
+      "org.freedesktop.impl.portal.Settings" = [ "gtk" ];
+      "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+    };
   };
-
   programs.hyprlock.enable = true;
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
+    GTK_THEME = "Adwaita:dark";
+    QT_QPA_PLATFORMTHEME = "gtk3";
   };
 
   security.polkit.enable = true;

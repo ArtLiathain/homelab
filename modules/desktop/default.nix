@@ -49,7 +49,7 @@
     enable = true;
     wayland.enable = false;
   };
-  services.displayManager.defaultSession = "hyprland-uwsm";
+  services.displayManager.defaultSession = "hyprland";
 
   environment.systemPackages = with pkgs; [
     # CLI
