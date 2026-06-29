@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   time.timeZone = "Europe/Dublin";
 
@@ -11,6 +10,18 @@
 
   nixpkgs.config.allowUnfree = true;
 
+nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
   hardware.enableRedistributableFirmware = true;
 
   boot.loader.systemd-boot.enable = true;
@@ -21,19 +32,19 @@
     enable = true;
   };
 
-  programs.git = {
-    enable = true;
-    config = {
-      user.name = "ArtLiathain";
-      user.email = "artp.oliathain@gmail.com";
-    };
-  };
-
   programs.zsh.enable = true;
   users.users.art = {
     extraGroups = [ "wheel" "networkmanager" ];
     shell = pkgs.zsh;
   };
+  users.mutableUsers = false;
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
 
   environment.systemPackages = with pkgs; [
     git

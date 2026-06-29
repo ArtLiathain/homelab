@@ -12,21 +12,6 @@
     portalPackage = pkgs.xdg-desktop-portal-hyprland;
     withUWSM = true;
   };
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-hyprland
-      xdg-desktop-portal-gtk
-    ];
-    config.common = {
-      default = [
-        "gtk"
-      ];
-      # This is what makes dark-mode detection work in Brave/Chromium
-      "org.freedesktop.impl.portal.Settings" = [ "gtk" ];
-      "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
-    };
-  };
   programs.hyprlock.enable = true;
 
   environment.sessionVariables = {
@@ -50,31 +35,6 @@
       RestartSec = 1;
       TimeoutStopSec = 10;
     };
-  };
-
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-color-emoji
-    dejavu_fonts
-    font-awesome
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.hack
-    material-design-icons
-  ];
-
-  fonts.fontconfig.defaultFonts = {
-    monospace = [
-      "JetBrainsMono Nerd Font"
-      "Hack Nerd Font"
-    ];
-    sansSerif = [
-      "Noto Sans"
-      "DejaVu Sans"
-    ];
-    serif = [
-      "Noto Serif"
-      "DejaVu Serif"
-    ];
   };
 
 }

@@ -11,19 +11,25 @@
     nixosConfigurations = {
       homelab = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [ ./hosts/homelab/configuration.nix ];
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/homelab/configuration.nix
+          home-manager.nixosModules.home-manager
+        ];
       };
 
       desktop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/desktop-vm/configuration.nix
+          ./hosts/desktop/configuration.nix
           home-manager.nixosModules.home-manager
         ];
       };
 
       laptop = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
         modules = [
           ./hosts/laptop/configuration.nix
           home-manager.nixosModules.home-manager

@@ -1,15 +1,17 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports = [
-    ./hardware.nix
-    ../../modules/core
-    ../../modules/homelab
+    ./hardware-configuration.nix
+    ../../modules/nixos/core
+    ../../modules/nixos/homelab
   ];
 
   networking.hostName = "homelab";
 
   users.users.art = {
+    isNormalUser = true;
+    group = "art";
     extraGroups = [ "media" ];
     packages = with pkgs; [ tree ];
     hashedPasswordFile = "/etc/nixos/art-password";
@@ -17,6 +19,8 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDoc8RFspnTgdAXya6UXYUsQGDybsbPjfZ7VwmBL1eP art@AWInc"
     ];
   };
+
+  users.groups.art = {};
 
   users.groups.media = {
     members = [ "art" "radarr" "sonarr" "prowlarr" "jellyfin" "lidarr" "sabnzbd" "jellyseerr" ];
@@ -41,6 +45,13 @@
   networking.firewall.allowedUDPPorts = [ 41641 ];
 
   virtualisation.docker.enable = true;
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.art = import ./home.nix;
+  };
 
   system.stateVersion = "25.11";
 }
