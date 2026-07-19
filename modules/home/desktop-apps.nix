@@ -67,6 +67,10 @@
     slurp
     sox
     swappy
+    pulseaudio # Provides pactl
+    libnotify
+    pwvucontrol
+    playerctl
 
     # Theming
     hyprcursor
@@ -84,21 +88,4 @@
     adwaita-qt6
   ];
 
-  systemd.user.services.brave-browser = {
-    Unit = {
-      Description = "Brave Browser autostart";
-      After = [
-        "graphical-session.target"
-        "xdg-desktop-portal.service"
-        "xdg-desktop-portal-gtk.service"
-      ];
-    };
-    Service = {
-      Type = "exec";
-      ExecStart = "${pkgs.brave}/bin/brave";
-    };
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-  };
 }

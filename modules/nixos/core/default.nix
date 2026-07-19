@@ -7,10 +7,9 @@
   i18n.defaultLocale = "en_IE.UTF-8";
 
   networking.networkmanager.enable = true;
-
   nixpkgs.config.allowUnfree = true;
 
-nix.settings = {
+  nix.settings = {
     experimental-features = [
       "nix-command"
       "flakes"
@@ -24,12 +23,23 @@ nix.settings = {
   };
   hardware.enableRedistributableFirmware = true;
 
+  hardware.enableAllFirmware = true;
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
   programs.nix-ld.enable = true;
 
   services.openssh = {
     enable = true;
+  };
+
+  services.irqbalance.enable = true;
+
+  boot.kernel.sysctl = {
+    "net.core.rmem_default" = 262144;
+    "net.core.rmem_max" = 4194304;
+    "net.core.netdev_max_backlog" = 5000;
+    "net.ipv4.tcp_congestion_control" = "bbr";
   };
 
   programs.zsh.enable = true;
@@ -38,6 +48,8 @@ nix.settings = {
     shell = pkgs.zsh;
   };
   users.mutableUsers = false;
+
+  environment.etc."nixos/art-password".source = ../../../secrets/art_password;
 
   nix.gc = {
     automatic = true;
@@ -50,11 +62,12 @@ nix.settings = {
     git
     neovim
     curl
+    iw
     wget
   ];
-imports =[
+  imports = [
     ./tailscale.nix
-];
+  ];
 }
 
 

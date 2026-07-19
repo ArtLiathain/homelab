@@ -8,6 +8,7 @@
   ];
 
   networking.hostName = "homelab";
+  networking.networkmanager.wifi.powersave = false;
 
   users.users.art = {
     isNormalUser = true;

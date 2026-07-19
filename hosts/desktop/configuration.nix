@@ -13,6 +13,7 @@
   ];
 
   networking.hostName = "desktop";
+  networking.networkmanager.wifi.powersave = false;
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };

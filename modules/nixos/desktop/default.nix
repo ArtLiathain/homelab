@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }:
 
 {
@@ -18,7 +17,7 @@
       "video"
       "audio"
     ];
-    hashedPassword = "$6$sTFYLSFGY/D7LIJ9$9bVUCMuMwjoqExwlKm71oqiyRUfWZnTfxMZas36NIexGBAqeiBC4L4YJ8rZHRnyqgfcyxMvU4S8xQGw3Lb8RJ0";
+    hashedPasswordFile = "/etc/nixos/art-password";
   };
   services.xserver.enable = true;
   services.displayManager.sddm = {
@@ -26,6 +25,17 @@
     wayland.enable = false;
   };
   services.displayManager.defaultSession = "hyprland";
+
+  programs.qylock = {
+    enable = true;
+    theme = "nier-automata";
+    themeOptions = {
+      terraria.backgroundMode = "time";
+      Genshin.backgroundMode = "time";
+      clockwork.orbital = { themeMode = "dark"; enableWindup = true; };
+      osu.gameMode = "menu";
+    };
+  };
 
   programs.dconf.enable = true;
   environment.systemPackages = with pkgs; [
@@ -80,6 +90,13 @@
     yaml-language-server
     zls
     opencode
+    nixd
+    ruff
+    prettierd
+    shfmt
+    nixpkgs-fmt
+    stylua
+    uv
 
     # Editors
     neovim

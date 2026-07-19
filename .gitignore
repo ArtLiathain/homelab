@@ -1,1 +1,1 @@
-secrets/**
+# secrets/art_password is tracked in git for password hash deployment
