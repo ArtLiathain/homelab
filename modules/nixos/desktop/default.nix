@@ -84,12 +84,14 @@
     stylua
     taplo
     tinymist
+    typescript
     typescript-language-server
     ripgrep
     vscode-langservers-extracted
     yaml-language-server
     zls
     opencode
+    pi-coding-agent
     nixd
     ruff
     prettierd
@@ -100,6 +102,9 @@
 
     # Editors
     neovim
+
+    # JS/Node
+    nodejs
 
     # Basics
     git
