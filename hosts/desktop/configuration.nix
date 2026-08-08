@@ -21,6 +21,7 @@
     useUserPackages = true;
     users.art = import ./home.nix;
   };
+    boot.initrd.kernelModules = ["nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm"];
 
   system.stateVersion = "25.11";
 }

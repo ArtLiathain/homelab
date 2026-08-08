@@ -18,10 +18,11 @@
     hashedPasswordFile = "/etc/nixos/art-password";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICDoc8RFspnTgdAXya6UXYUsQGDybsbPjfZ7VwmBL1eP art@AWInc"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGI80jgXTTYoeB3UHhRT2LAVvwL5928ncrHUAyJNo7JM art.oliathain@gmail.com"
     ];
   };
 
-  users.groups.art = {};
+  users.groups.art = { };
 
   users.groups.media = {
     members = [ "art" "radarr" "sonarr" "prowlarr" "jellyfin" "lidarr" "sabnzbd" "jellyseerr" ];
