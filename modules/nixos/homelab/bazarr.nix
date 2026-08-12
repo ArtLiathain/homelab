@@ -8,6 +8,7 @@
   };
 
   systemd.services.bazarr.serviceConfig = {
+    ProtectSystem = "full";
     ReadWritePaths = [ "/data" ];
   };
 }
