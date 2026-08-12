@@ -25,7 +25,7 @@
   users.groups.art = { };
 
   users.groups.media = {
-    members = [ "art" "radarr" "sonarr" "prowlarr" "jellyfin" "lidarr" "sabnzbd" "jellyseerr" ];
+    members = [ "art" "radarr" "sonarr" "prowlarr" "jellyfin" "lidarr" "sabnzbd" "jellyseerr" "bazarr" ];
   };
 
   systemd.tmpfiles.rules = [

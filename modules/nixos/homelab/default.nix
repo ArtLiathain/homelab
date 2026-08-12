@@ -7,5 +7,6 @@
     ./jellyfin.nix
     ./lidarr.nix
     ./jellyseerr.nix
+    ./bazarr.nix
   ];
 }
