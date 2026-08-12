@@ -4,6 +4,7 @@
   services.bazarr = {
     enable = true;
     openFirewall = true;
+    group = "media";
   };
 
   systemd.services.bazarr.serviceConfig = {
