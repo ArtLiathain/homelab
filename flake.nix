@@ -20,7 +20,7 @@
         modules = [
           ./hosts/homelab/configuration.nix
           home-manager.nixosModules.home-manager
-          nix.minecraft.nixosModules.minecraft-servers
+          nix-minecraft.nixosModules.minecraft-servers
         ];
       };
 
