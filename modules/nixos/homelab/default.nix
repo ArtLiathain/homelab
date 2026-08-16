@@ -8,5 +8,6 @@
     ./lidarr.nix
     ./jellyseerr.nix
     ./bazarr.nix
+    ./minecraft.nix
   ];
 }
