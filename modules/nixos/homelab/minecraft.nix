@@ -10,7 +10,7 @@
       let
         modpack = pkgs.fetchModrinthModpack {
           url = "https://cdn.modrinth.com/data/6HvKwSky/versions/WMsE2fOj/Homestead%201.3.7.mrpack";
-          packHash = lib.fakeHash; # build once, Nix prints the real hash, paste it in
+          packHash = "sha256-JeT5l11PqP5Hv4HvN2wa4S73I2VRdVGVN9pjJrhwpc0=";
           side = "server";
         };
       in
@@ -72,7 +72,7 @@
     let
       modpack = pkgs.fetchModrinthModpack {
         url = "https://cdn.modrinth.com/data/6HvKwSky/versions/WMsE2fOj/Homestead%201.3.7.mrpack";
-        packHash = lib.fakeHash;
+        packHash = "sha256-JeT5l11PqP5Hv4HvN2wa4S73I2VRdVGVN9pjJrhwpc0=";
         side = "server";
       };
     in
