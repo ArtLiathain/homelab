@@ -5,9 +5,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    inputs = {
-      nix-minecraft.url = "github:Infinidoge/nix-minecraft";
-    };
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
 
     qylock.url = "github:Darkkal44/qylock";
   };
