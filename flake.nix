@@ -5,11 +5,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    inputs = {
+      nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+    };
 
     qylock.url = "github:Darkkal44/qylock";
   };
 
-  outputs = { self, nixpkgs, home-manager, qylock, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, qylock, nix-minecraft, ... }@inputs: {
     nixosConfigurations = {
       homelab = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -17,6 +20,7 @@
         modules = [
           ./hosts/homelab/configuration.nix
           home-manager.nixosModules.home-manager
+          nix.minecraft.nixosModules.minecraft-servers
         ];
       };
 
