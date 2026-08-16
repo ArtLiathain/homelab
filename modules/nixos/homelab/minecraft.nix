@@ -2,22 +2,37 @@
 {
   imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
   nixpkgs.overlays = [ inputs.nix-minecraft.overlay ];
+
   services.minecraft-servers = {
     enable = true;
     eula = true;
     openFirewall = true;
+
     servers.homestead =
       let
-        modpack = pkgs.fetchModrinthModpack {
+        # Raw fetch of the modpack as published on Modrinth.
+        modpackRaw = pkgs.fetchModrinthModpack {
           url = "https://cdn.modrinth.com/data/6HvKwSky/versions/WMsE2fOj/Homestead%201.3.7.mrpack";
           packHash = "sha256-JeT5l11PqP5Hv4HvN2wa4S73I2VRdVGVN9pjJrhwpc0=";
           side = "server";
         };
+
+        # Patched copy: strips client-only mods that are mismarked as
+        # server-safe in the pack metadata and crash Fabric's server
+        # entrypoint (e.g. colorwheel_patcher referencing
+        # ClientLifecycleEvents in a SERVER environment).
+        modpack = pkgs.runCommand "homestead-server-fixed" { } ''
+          mkdir -p $out
+          cp -r ${modpackRaw}/. $out
+          chmod -R u+w $out
+          rm -f $out/mods/colorwheel_patcher*.jar
+        '';
       in
       {
         enable = true;
         autoStart = true;
         openFirewall = true;
+
         package = pkgs.fabricServers.fabric-1_20_1.override {
           loaderVersion = "0.18.4";
         };
@@ -47,6 +62,7 @@
           "-XX:SurvivorRatio=32"
           "-XX:MaxTenuringThreshold=1"
         ];
+
         serverProperties = {
           server-port = 25565;
           difficulty = "normal";
@@ -62,19 +78,30 @@
           network-compression-threshold = 256;
           max-tick-time = 60000;
         };
+
         operators = {
           BadCallouts = "673efeda4d3c476a834054e6d77613b8";
         };
       };
   };
 
+  # Seed the config/ directory from the modpack on first run only, so
+  # in-game edits to config files aren't clobbered on every restart.
+  # NOTE: this references the same `modpack` derivation defined above,
+  # so it stays in sync with the mods symlink automatically.
   systemd.services."minecraft-server-homestead".preStart =
     let
-      modpack = pkgs.fetchModrinthModpack {
+      modpackRaw = pkgs.fetchModrinthModpack {
         url = "https://cdn.modrinth.com/data/6HvKwSky/versions/WMsE2fOj/Homestead%201.3.7.mrpack";
         packHash = "sha256-JeT5l11PqP5Hv4HvN2wa4S73I2VRdVGVN9pjJrhwpc0=";
         side = "server";
       };
+      modpack = pkgs.runCommand "homestead-server-fixed" { } ''
+        mkdir -p $out
+        cp -r ${modpackRaw}/. $out
+        chmod -R u+w $out
+        rm -f $out/mods/colorwheel_patcher*.jar
+      '';
     in
     lib.mkAfter ''
       if [ ! -d "/srv/minecraft/homestead/config" ]; then
