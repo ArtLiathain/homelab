@@ -36,7 +36,7 @@ let
       rev = "v0.2.10";
 
       # Replace with the real hash after the first build attempt fails.
-      hash = lib.fakeHash;
+      hash = "sha256-IObLjxuMJDjZ3M6M1DaPvmoRqAydbLKdpTQ3Vs+B9Oo=";
     };
   });
 
