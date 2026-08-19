@@ -3,6 +3,14 @@
   services.tdarr = {
     enable = true;
     group = "media";
+    nodes."MyNixNode" = {
+      enable = true;
+      type = "mapped"; # Keeps files aligned via shared paths
+
+      # Point this to your Tdarr Server IP/Port
+      serverIP = "192.168.1.50";
+      serverPort = 8266;
+    };
   };
 
   systemd.services.tdarr.serviceConfig = {
