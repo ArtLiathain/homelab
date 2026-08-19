@@ -35,8 +35,7 @@ let
       repo = "lazymc";
       rev = "v0.2.10";
 
-      # Replace with the real hash after the first build attempt fails.
-      hash = "sha256-IObLjxuMJDjZ3M6M1DaPvmoRqAydbLKdpTQ3Vs+B9Oo=";
+      hash = "sha256-Tx+Bof4NtVd7AlYMS6veLiT/9vBXPIRVpMecoW7SpfM=";
     };
   });
 
