@@ -6,7 +6,7 @@
     group = "media";
   };
 
-  systemd.services.radarr.serviceConfig = {
+  systemd.services.tdarr.serviceConfig = {
     ReadWritePaths = [ "/data" ];
   };
 }
