@@ -8,8 +8,7 @@
       type = "mapped"; # Keeps files aligned via shared paths
 
       # Point this to your Tdarr Server IP/Port
-      serverURL = "192.168.1.50";
-      serverPort = 8266;
+      serverURL = "192.168.1.50:8266";
     };
   };
 
