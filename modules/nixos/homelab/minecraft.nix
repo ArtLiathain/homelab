@@ -35,8 +35,10 @@ let
       repo = "lazymc";
       rev = "v0.2.10";
 
-      hash = "sha256-Tx+Bof4NtVd7AlYMS6veLiT/9vBXPIRVpMecoW7SpfM=";
+      hash = "sha256-IObLjxuMJDjZ3M6M1DaPvmoRqAydbLKdpTQ3Vs+B9Oo=";
     };
+
+    cargoHash = "sha256-Tx+Bof4NtVd7AlYMS6veLiT/9vBXPIRVpMecoW7SpfM=";
   });
 
   # ===========================================================================
