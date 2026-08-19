@@ -8,31 +8,32 @@
 {
 
   system.activationScripts.zz-deploy-dotfiles = ''
-    HOME_DIR="/home/art"
-    DOTFILES_DIR="$HOME_DIR/.dotfiles"
+    export HOME=/home/art
+    DOTFILES_DIR="$HOME/.dotfiles"
     DOTFILES_REPO="https://github.com/ArtLiathain/dotfiles.git"
 
     if [ ! -d "$DOTFILES_DIR/.git" ]; then
       rm -rf "$DOTFILES_DIR"
       ${pkgs.git}/bin/git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
-      cd "$DOTFILES_DIR"
-      ${pkgs.git}/bin/git remote set-url origin git@github.com:ArtLiathain/dotfiles.git
+      ${pkgs.git}/bin/git -C "$DOTFILES_DIR" remote set-url origin git@github.com:ArtLiathain/dotfiles.git
       chown -R art:users "$DOTFILES_DIR"
     fi
 
-    cd "$DOTFILES_DIR"
-    ${pkgs.git}/bin/git diff --quiet && ${pkgs.git}/bin/git pull --ff-only || true
+    ${pkgs.git}/bin/git -C "$DOTFILES_DIR" pull --ff-only 2>/dev/null || true
 
-    # Ensure scripts are executable (git doesn't reliably track permissions)
-    chmod +x "$DOTFILES_DIR/home/scripts"/*.sh
+    shopt -s nullglob
+    for f in "$DOTFILES_DIR/home/scripts"/*.sh; do
+      chmod +x "$f"
+    done
+    shopt -u nullglob
 
-    mkdir -p /home/art/.config /home/art/scripts /home/art/wallpapers
-    ${pkgs.stow}/bin/stow --adopt --restow -d "$DOTFILES_DIR/config" -t /home/art/.config .
-    ${pkgs.stow}/bin/stow --adopt --restow -d "$DOTFILES_DIR/home" -t /home/art .
-    chown -R art:users /home/art
+    mkdir -p "$HOME/.config" "$HOME/scripts" "$HOME/wallpapers"
+    ${pkgs.stow}/bin/stow --adopt --restow -d "$DOTFILES_DIR/config" -t "$HOME/.config" .
+    ${pkgs.stow}/bin/stow --adopt --restow -d "$DOTFILES_DIR/home" -t "$HOME" .
+    chown -R art:users "$HOME"
 
-    if [ ! -f "$HOME_DIR/.cache/wallust/colors_neopywal.vim" ]; then
-     ${pkgs.su}/bin/su - art -c "${pkgs.bash}/bin/bash /home/art/scripts/process_wallpaper.sh /home/art/wallpapers/default_wallpaper.jpg"
+    if [ ! -f "$HOME/.cache/wallust/colors_neopywal.vim" ]; then
+     ${pkgs.su}/bin/su - art -c "${pkgs.bash}/bin/bash $HOME/scripts/process_wallpaper.sh $HOME/wallpapers/default_wallpaper.jpg"
     fi
   '';
 
