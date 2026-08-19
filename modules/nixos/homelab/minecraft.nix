@@ -27,7 +27,8 @@ let
   # v0.2.11 changed the supported Minecraft protocol range to 1.20.3+.
   # ===========================================================================
 
-  lazymc = pkgs.lazymc.overrideAttrs (old: {
+  lazymc = pkgs.rustPlatform.buildRustPackage {
+    pname = "lazymc";
     version = "0.2.10";
 
     src = pkgs.fetchFromGitHub {
@@ -39,7 +40,7 @@ let
     };
 
     cargoHash = "sha256-Tx+Bof4NtVd7AlYMS6veLiT/9vBXPIRVpMecoW7SpfM=";
-  });
+  };
 
   # ===========================================================================
   # Start the nix-minecraft service
