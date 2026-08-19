@@ -25,6 +25,14 @@
 
   users.groups.art = { };
 
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # Standard VA-API driver for Intel Core processors
+      vpl-gpu-rt # Required for Intel Quick Sync Video (QSV) runtimes
+    ];
+  };
+
   users.groups.media = {
     members = [ "art" "radarr" "sonarr" "prowlarr" "jellyfin" "lidarr" "sabnzbd" "jellyseerr" "bazarr" ];
   };

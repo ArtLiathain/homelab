@@ -27,66 +27,53 @@ let
   # v0.2.11 changed the supported Minecraft protocol range to 1.20.3+.
   # ===========================================================================
 
-  lazymc = pkgs.lazymc.overrideAttrs
-    (old: {
-      version = "0.2.10";
+  lazymc = pkgs.lazymc.overrideAttrs (old: {
+    version = "0.2.10";
 
-      src = pkgs.fetchFromGitHub
-        {
-          owner = "timvisee";
-          repo = "lazymc";
-          rev = "v0.2.10";
+    src = pkgs.fetchFromGitHub {
+      owner = "timvisee";
+      repo = "lazymc";
+      rev = "v0.2.10";
 
-          hash = lib.fakeHash;
-        };
-    })
+      # Replace with the real hash after the first build attempt fails.
+      hash = lib.fakeHash;
+    };
+  });
 
-    # ===========================================================================
-    # Start the nix-minecraft service
-    #
-    # lazymc runs this command when a player connects while Homestead is asleep.
-    # ===========================================================================
-
-    let startHomestead = pkgs.writeShellApplication {
-    name = "start-homestead";
-
-  runtimeInputs = [
-    pkgs.systemd
-    pkgs.coreutils
-  ];
-
-  text = ''
-    set -euo pipefail
-
-    systemctl start minecraft-server-homestead.service
-
-    while ! systemctl is-active --quiet minecraft-server-homestead.service; do
-      if systemctl is-failed --quiet minecraft-server-homestead.service; then
-        echo "minecraft-server-homestead.service failed to start" >&2
-        exit 1
-      fi
-
-      sleep 1
-    done
-  '';
-  };  # ===========================================================================
-  # Stop the nix-minecraft service
+  # ===========================================================================
+  # Start the nix-minecraft service
   #
-  # lazymc calls this after the idle timeout.
+  # lazymc runs this command when a player connects while Homestead is asleep.
   # ===========================================================================
 
-  stopHomestead = pkgs.writeShellScript "stop-homestead" ''
-    set -euo pipefail
+  startHomestead = pkgs.writeShellApplication {
+    name = "start-homestead";
 
-    ${pkgs.systemd}/bin/systemctl stop minecraft-server-homestead.service
-  '';
+    runtimeInputs = [
+      pkgs.systemd
+      pkgs.coreutils
+    ];
+
+    text = ''
+      set -euo pipefail
+
+      systemctl start minecraft-server-homestead.service
+
+      while ! systemctl is-active --quiet minecraft-server-homestead.service; do
+        if systemctl is-failed --quiet minecraft-server-homestead.service; then
+          echo "minecraft-server-homestead.service failed to start" >&2
+          exit 1
+        fi
+
+        sleep 1
+      done
+    '';
+  };
+
+  rconPassword = "9babfab2034d4517a90e9f8937895ce6";
 
 in
 {
-  imports = [
-    inputs.nix-minecraft.nixosModules.minecraft-servers
-  ];
-
   nixpkgs.overlays = [
     inputs.nix-minecraft.overlay
   ];
@@ -117,7 +104,6 @@ in
       autoStart = false;
 
       # Do NOT expose Minecraft directly.
-      lazymc = true;
       openFirewall = false;
 
       package = pkgs.fabricServers.fabric-1_20_1.override {
@@ -152,8 +138,6 @@ in
 
       serverProperties = {
         # ---------------------------------------------------------------------
-        # IMPORTANT:
-        #
         # lazymc owns :25565.
         # Minecraft itself listens only on localhost :25566.
         # ---------------------------------------------------------------------
@@ -185,13 +169,12 @@ in
         # lazymc uses RCON to gracefully stop the Minecraft server after the
         # idle timeout.
         #
-        # IMPORTANT: replace this with a proper secret-management solution
-        # later. Do not reuse this password elsewhere.
+        # TODO: move to a proper secret-management solution (agenix, sops-nix).
         # ---------------------------------------------------------------------
 
         enable-rcon = true;
         "rcon.port" = 25575;
-        "rcon.password" = "CHANGE-THIS-RCON-PASSWORD";
+        "rcon.password" = rconPassword;
       };
 
       operators = {
@@ -293,7 +276,7 @@ in
     [rcon]
     enabled = true
     port = 25575
-    password = "CHANGE-THIS-RCON-PASSWORD"
+    password = "${rconPassword}"
     randomize_password = false
     send_proxy_v2 = false
 
@@ -371,4 +354,3 @@ in
       fi
     '';
 }
-
