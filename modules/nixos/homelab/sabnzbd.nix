@@ -4,6 +4,7 @@
   services.sabnzbd = {
     enable = true;
     openFirewall = true;
+    group = "media";
     settings = {
       misc = {
         host = "0.0.0.0";
@@ -15,6 +16,7 @@
   };
 
   systemd.services.sabnzbd.serviceConfig = {
+    UMask = "002";
     ReadWritePaths = [ "/data" ];
   };
 }

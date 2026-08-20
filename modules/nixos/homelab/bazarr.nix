@@ -8,6 +8,7 @@
   };
 
   systemd.services.bazarr.serviceConfig = {
+    UMask = "002";
     ProtectSystem = "full";
     ReadWritePaths = [ "/data" ];
   };

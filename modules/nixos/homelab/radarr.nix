@@ -7,6 +7,7 @@
   };
 
   systemd.services.radarr.serviceConfig = {
+    UMask = "002";
     ReadWritePaths = [ "/data" ];
   };
 }

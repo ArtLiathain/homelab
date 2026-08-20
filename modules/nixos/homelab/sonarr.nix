@@ -8,6 +8,7 @@
   };
 
   systemd.services.sonarr.serviceConfig = {
+    UMask = "002";
     ReadWritePaths = [ "/data" ];
   };
 }

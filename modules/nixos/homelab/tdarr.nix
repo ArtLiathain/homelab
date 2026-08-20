@@ -13,6 +13,7 @@
   };
 
   systemd.services.tdarr.serviceConfig = {
+    UMask = "002";
     ReadWritePaths = [ "/data" ];
   };
 }
