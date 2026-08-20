@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   services.radarr = {
     enable = true;
@@ -7,7 +7,7 @@
   };
 
   systemd.services.radarr.serviceConfig = {
-    UMask = "002";
+    UMask = lib.mkForce "002";
     ReadWritePaths = [ "/data" ];
   };
 }

@@ -8,7 +8,7 @@
   };
 
   systemd.services.sonarr.serviceConfig = {
-    UMask = "002";
+    UMask = lib.mkForce "002";
     ReadWritePaths = [ "/data" ];
   };
 }
