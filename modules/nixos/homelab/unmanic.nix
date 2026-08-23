@@ -6,7 +6,7 @@
     dataDir = "/var/lib/unmanic";
     user = "unmanic";
     group = "unmanic";
-    extraGroups = [ "video" "render" ];
+    extraGroups = [ "media" "video" "render" ];
     openFirewall = true;
   };
 }
