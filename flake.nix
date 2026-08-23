@@ -19,7 +19,7 @@
           ./hosts/homelab/configuration.nix
           home-manager.nixosModules.home-manager
           nix-minecraft.nixosModules.minecraft-servers
-          unmanic-nix.nixosModules.unmanic
+          unmanic-nix.nixosModules.unmanic.default
         ];
       };
 
