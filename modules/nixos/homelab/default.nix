@@ -5,6 +5,7 @@
     ./sonarr.nix
     ./radarr.nix
     ./seafile.nix
+    ./unmanic.nix
     ./jellyfin.nix
     ./lidarr.nix
     ./jellyseerr.nix
