@@ -66,6 +66,7 @@
     curl
     iw
     wget
+    nodejs
   ];
   imports = [
     ./tailscale.nix
