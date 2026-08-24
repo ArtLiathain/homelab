@@ -1,5 +1,17 @@
 { lib, ... }:
 {
+  # Replace tdarr-node's bundled pnpm (doesn't run on NixOS) with nixpkgs' pnpm.
+  nixpkgs.overlays = [
+    (final: prev: {
+      tdarr = prev.tdarr.overrideAttrs (old: {
+        postFixup = (old.postFixup or "") + ''
+          rm -f $out/share/tdarr-node/runtime/pnpm
+          ln -s ${prev.nodePackages.pnpm}/bin/pnpm $out/share/tdarr-node/runtime/pnpm
+        '';
+      });
+    })
+  ];
+
   services.tdarr = {
     enable = true;
     server.openFirewall = true;
