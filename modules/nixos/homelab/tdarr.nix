@@ -28,7 +28,7 @@
   systemd.services."tdarr-node-main".serviceConfig = {
     UMask = lib.mkForce "002";
 
-    ReadWritePaths = [ "/data" "/opt/tdarr/cache" ];
+    ReadWritePaths = [ "/data" "/opt/tdarr/cache" "/var/lib/tdarr" ];
   };
 
 
