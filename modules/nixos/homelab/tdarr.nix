@@ -18,4 +18,9 @@
 
     ReadWritePaths = [ "/data" "/opt/tdarr/cache" ];
   };
+
+
+  systemd.tmpfiles.rules = [
+    "d /opt/tdarr/cache 0750 tdarr tdarr - -"
+  ];
 }
