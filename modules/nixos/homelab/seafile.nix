@@ -82,7 +82,7 @@
           # front of this for TLS/public access rather than exposing 8082
           # directly.
           ports = [
-            "127.0.0.1:8082:80"
+            "0.0.0.0:8082:80"
           ];
 
           # /shared is where seafile-mc expects to keep everything it owns
@@ -124,6 +124,10 @@
 
   # Make sure the host directories these containers bind-mount actually
   # exist with sane ownership before the containers try to start.
+  # Tailscale traffic is trusted so seafile is reachable over the VPN without
+  # extra firewall holes.
+  networking.firewall.trustedInterfaces = [ "tailscale0" ];
+
   systemd.tmpfiles.rules = [
     "d /var/lib/seafile/data 0750 root root -"
     "d /var/lib/seafile/mariadb 0750 root root -"
