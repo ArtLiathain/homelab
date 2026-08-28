@@ -40,7 +40,7 @@
       containers = {
 
         memcached = {
-          image = "memcached:1.6.29"; # pin explicitly
+          image = "docker.io/library/memcached:1.6.29"; # pin explicitly
           autoStart = true;
           # seafile-mc's default LOCATION is 'memcached:11211' — no port
           # mapping needed, just resolvable by name on the shared network.
