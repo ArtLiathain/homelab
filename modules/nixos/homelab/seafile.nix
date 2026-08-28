@@ -96,6 +96,7 @@
             DB_ROOT_PASSWD = "CHANGE_ME_root"; # must match mariadb's root pw
             REDIS_HOST = "redis";
             REDIS_PORT = "6379";
+            CACHE_PROVIDER = "redis";
 
             TIME_ZONE = "Etc/UTC";
             SEAFILE_ADMIN_EMAIL = "homelab";
