@@ -53,6 +53,9 @@
 
   environment.etc."nixos/art-password".source = ../../../secrets/art_password;
 
+
+  boot.loader.grub.configurationLimit = 5;
+
   nix.gc = {
     automatic = true;
     dates = "weekly";
