@@ -60,6 +60,9 @@
     ffmpeg
     notion-app-enhanced
 
+    # Seafile CLI
+    seafile-shared
+
     # Media / Graphics
     grim
     imagemagick

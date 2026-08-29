@@ -106,8 +106,8 @@
             CACHE_PROVIDER = "redis";
 
             TIME_ZONE = "Etc/UTC";
-            SEAFILE_ADMIN_EMAIL = "homelab";
-            SEAFILE_ADMIN_PASSWORD = "CHANGE_ME_admin"; # only used on first init
+            SEAFILE_ADMIN_EMAIL = "homelab@home.lab";
+            SEAFILE_ADMIN_PASSWORD = "test123"; # only used on first init
             JWT_PRIVATE_KEY = "8ee4e99282a6fca814ae7e8d37b82f4a0baa16e03bca576af9091f080606e41b";
 
             # SEAFILE_SERVER_HOSTNAME should match whatever you'll reverse
