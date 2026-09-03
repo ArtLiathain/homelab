@@ -113,7 +113,7 @@
 
             # SEAFILE_SERVER_HOSTNAME should match whatever you'll reverse
             # proxy this behind, e.g. seafile.example.com
-            SEAFILE_SERVER_HOSTNAME = "0.0.0.0";
+            SEAFILE_SERVER_HOSTNAME = "100.99.146.99:8082";
           };
 
           dependsOn = [
