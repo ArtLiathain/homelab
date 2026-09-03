@@ -152,18 +152,16 @@
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = pkgs.writeShellScript "write-seafdav-conf" ''
-        mkdir -p /var/lib/seafile/data/seafile/conf
-        if [ ! -f /var/lib/seafile/data/seafile/conf/seafdav.conf ]; then
-          cat > /var/lib/seafile/data/seafile/conf/seafdav.conf << 'EOF'
-[WEBDAV]
-enabled = true
-port = 8080
-fastcgi = false
-share_name = /seafdav
-workers = 2
-timeout = 1200
-EOF
-        fi
+                mkdir -p /var/lib/seafile/data/seafile/conf
+                  cat > /var/lib/seafile/data/seafile/conf/seafdav.conf << 'EOF'
+        [WEBDAV]
+        enabled = true
+        port = 8080
+        fastcgi = false
+        share_name = /seafdav
+        workers = 2
+        timeout = 1200
+        EOF
       '';
     };
   };
