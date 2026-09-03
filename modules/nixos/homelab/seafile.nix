@@ -90,6 +90,7 @@
           # directly.
           ports = [
             "0.0.0.0:8082:80"
+            "0.0.0.0:8083:8080" # seafdav (webdav)
           ];
 
           # /shared is where seafile-mc expects to keep everything it owns
@@ -142,6 +143,30 @@
     "d /var/lib/seafile/mariadb 0750 root root -"
     "d /var/lib/seafile/redis 0750 root root -"
   ];
+
+  systemd.services.seafdav-init = {
+    description = "Write SeafDAV config if missing";
+    before = [ "podman-seafile.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = pkgs.writeShellScript "write-seafdav-conf" ''
+        mkdir -p /var/lib/seafile/data/seafile/conf
+        if [ ! -f /var/lib/seafile/data/seafile/conf/seafdav.conf ]; then
+          cat > /var/lib/seafile/data/seafile/conf/seafdav.conf << 'EOF'
+[WEBDAV]
+enabled = true
+port = 8080
+fastcgi = false
+share_name = /seafdav
+workers = 2
+timeout = 1200
+EOF
+        fi
+      '';
+    };
+  };
 
   # -----------------------------------------------------------------------
   # NOTE ON SECRETS
