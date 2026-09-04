@@ -1,5 +1,6 @@
 {
   imports = [
+    ./immich.nix
     ./sabnzbd.nix
     ./prowlarr.nix
     ./sonarr.nix
