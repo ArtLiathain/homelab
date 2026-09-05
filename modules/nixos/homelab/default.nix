@@ -11,6 +11,7 @@
     ./lidarr.nix
     ./jellyseerr.nix
     ./bazarr.nix
+    ./homepage.nix
     ./minecraft.nix
   ];
 }
