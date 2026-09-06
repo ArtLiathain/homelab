@@ -137,9 +137,4 @@
       }
     ];
   };
-
-  systemd.services.homepage-dashboard = {
-    after = [ "sops-nix.service" ];
-    requires = [ "sops-nix.service" ];
-  };
 }

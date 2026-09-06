@@ -34,5 +34,6 @@
     owner = "root";
     group = "root";
     mode = "0400";
+    restartUnits = [ "homepage-dashboard.service" ];
   };
 }
