@@ -12,6 +12,7 @@
     ./jellyseerr.nix
     ./bazarr.nix
     ./homepage.nix
+    ./terraria.nix
     ./sops.nix
   ];
 }

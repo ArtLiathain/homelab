@@ -123,6 +123,11 @@
               description = "Homestead (1.20.1)";
               widget = { type = "minecraft"; url = "udp://127.0.0.1:25565"; }; # no href: UDP game server
             }; }
+          { Terraria = {
+              icon = "sh-terraria";
+              description = "AW's Adventures (tModLoader)";
+              siteMonitor = "http://100.99.146.99:7777"; # TCP up/down on tailscale0
+            }; }
         ];
       }
     ];
