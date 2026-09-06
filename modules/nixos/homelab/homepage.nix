@@ -8,6 +8,8 @@
 
     allowedHosts = "0.0.0.0:8090,homelab:8090,100.99.146.99:8090,localhost:8090,127.0.0.1:8090";
 
+    environmentFiles = [ config.sops.templates."homepage-env".path ];
+
     settings = {
       title = "Homelab";
       theme = "dark";
@@ -52,43 +54,43 @@
               icon = "sh-sonarr";
               href = "http://100.99.146.99:8989";
               description = "TV";
-              widget = { type = "sonarr"; url = "http://localhost:8989"; key = config.sops.secrets."sonarr-key".path; enableQueue = true; };
+              widget = { type = "sonarr"; url = "http://localhost:8989"; key = "{{HOMEPAGE_VAR_SONARR_KEY}}"; enableQueue = true; };
             }; }
           { Radarr = {
               icon = "sh-radarr";
               href = "http://100.99.146.99:7878";
               description = "Movies";
-              widget = { type = "radarr"; url = "http://localhost:7878"; key = config.sops.secrets."radarr-key".path; };
+              widget = { type = "radarr"; url = "http://localhost:7878"; key = "{{HOMEPAGE_VAR_RADARR_KEY}}"; };
             }; }
           { Lidarr = {
               icon = "sh-lidarr";
               href = "http://100.99.146.99:8686";
               description = "Music";
-              widget = { type = "lidarr"; url = "http://localhost:8686"; key = config.sops.secrets."lidarr-key".path; };
+              widget = { type = "lidarr"; url = "http://localhost:8686"; key = "{{HOMEPAGE_VAR_LIDARR_KEY}}"; };
             }; }
           { Prowlarr = {
               icon = "sh-prowlarr";
               href = "http://100.99.146.99:9696";
               description = "Indexers";
-              widget = { type = "prowlarr"; url = "http://localhost:9696"; key = config.sops.secrets."prowlarr-key".path; };
+              widget = { type = "prowlarr"; url = "http://localhost:9696"; key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}"; };
             }; }
           { Jellyfin = {
               icon = "sh-jellyfin";
               href = "http://100.99.146.99:8096";
               description = "Media server";
-              widget = { type = "jellyfin"; url = "http://localhost:8096"; key = config.sops.secrets."jellyfin-key".path; version = 1; enableBlocks = true; enableNowPlaying = true; }; # bump version = 2 when Jellyfin >= 12.x lands in nixpkgs
+              widget = { type = "jellyfin"; url = "http://localhost:8096"; key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}"; version = 1; enableBlocks = true; enableNowPlaying = true; }; # bump version = 2 when Jellyfin >= 12.x lands in nixpkgs
             }; }
           { Jellyseerr = {
               icon = "sh-jellyseerr";
               href = "http://100.99.146.99:5055";
               description = "Requests";
-              widget = { type = "seerr"; url = "http://localhost:5055"; key = config.sops.secrets."jellyseerr-key".path; };
+              widget = { type = "seerr"; url = "http://localhost:5055"; key = "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}"; };
             }; }
           { Bazarr = {
               icon = "sh-bazarr";
               href = "http://100.99.146.99:6767";
               description = "Subtitles";
-              widget = { type = "bazarr"; url = "http://localhost:6767"; key = config.sops.secrets."bazarr-key".path; };
+              widget = { type = "bazarr"; url = "http://localhost:6767"; key = "{{HOMEPAGE_VAR_BAZARR_KEY}}"; };
             }; }
         ];
       }
@@ -98,7 +100,7 @@
               icon = "sh-sabnzbd";
               href = "http://100.99.146.99:8081";
               description = "Usenet";
-              widget = { type = "sabnzbd"; url = "http://localhost:8081"; key = config.sops.secrets."sabnzbd-key".path; };
+              widget = { type = "sabnzbd"; url = "http://localhost:8081"; key = "{{HOMEPAGE_VAR_SABNZBD_KEY}}"; };
             }; }
           { TDarr = {
               icon = "sh-tdarr";
@@ -134,5 +136,10 @@
         ];
       }
     ];
+  };
+
+  systemd.services.homepage-dashboard = {
+    after = [ "sops-nix.service" ];
+    requires = [ "sops-nix.service" ];
   };
 }

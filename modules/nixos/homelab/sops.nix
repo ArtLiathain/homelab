@@ -19,4 +19,20 @@
       format = "dotenv";
     };
   };
+
+  sops.templates."homepage-env" = {
+    content = ''
+      HOMEPAGE_VAR_SONARR_KEY=${config.sops.placeholder."sonarr-key"}
+      HOMEPAGE_VAR_RADARR_KEY=${config.sops.placeholder."radarr-key"}
+      HOMEPAGE_VAR_LIDARR_KEY=${config.sops.placeholder."lidarr-key"}
+      HOMEPAGE_VAR_PROWLARR_KEY=${config.sops.placeholder."prowlarr-key"}
+      HOMEPAGE_VAR_JELLYFIN_KEY=${config.sops.placeholder."jellyfin-key"}
+      HOMEPAGE_VAR_JELLYSEERR_KEY=${config.sops.placeholder."jellyseerr-key"}
+      HOMEPAGE_VAR_BAZARR_KEY=${config.sops.placeholder."bazarr-key"}
+      HOMEPAGE_VAR_SABNZBD_KEY=${config.sops.placeholder."sabnzbd-key"}
+    '';
+    owner = "root";
+    group = "root";
+    mode = "0400";
+  };
 }
