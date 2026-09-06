@@ -51,7 +51,18 @@
   };
   users.mutableUsers = false;
 
-  environment.etc."nixos/art-password".source = ../../../secrets/art_password;
+  # Shared `art` login password, managed via sops. sops-nix decrypts this
+  # using the host's SSH host key and writes it to /etc/nixos/art-password
+  # (referenced as hashedPasswordFile). Every host that imports this core
+  # module provisions it, so `art-password.yaml` lists all hosts as recipients.
+  # `neededForUsers` ensures decryption runs before the users activation
+  # writes /etc/shadow, so hashedPasswordFile never races the secret.
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.secrets."art-password" = {
+    sopsFile = ../../../secrets/art-password.yaml;
+    path = "/etc/nixos/art-password";
+    neededForUsers = true;
+  };
 
 
   boot.loader.grub.configurationLimit = 5;
@@ -70,6 +81,9 @@
     iw
     wget
     nodejs
+    age
+    sops
+    ssh-to-age
   ];
   imports = [
     ./tailscale.nix

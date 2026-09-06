@@ -30,8 +30,6 @@
 
   hardware.cpu.amd.updateMicrocode = true;
 
-  # Realtek RTL8821CE - out-of-tree driver (better than in-kernel rtw88)
-  boot.blacklistedKernelModules = [ "rtw88_8821ce" "rtw88_pci" "rtw88_core" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.rtl8821ce ];
+  # Realtek RTL8821CE - in-kernel rtw88 driver (out-of-tree rtl8821ce removed from nixpkgs 2026-07-22)
   boot.kernelParams = [ "pcie_aspm=off" ];
 }

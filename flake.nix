@@ -7,9 +7,13 @@
     };
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     qylock.url = "github:Darkkal44/qylock";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, qylock, nix-minecraft, ... }@inputs: {
+  outputs = { nixpkgs, home-manager, qylock, nix-minecraft, sops-nix, ... }@inputs: {
     nixosConfigurations = {
       homelab = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -18,6 +22,7 @@
           ./hosts/homelab/configuration.nix
           home-manager.nixosModules.home-manager
           nix-minecraft.nixosModules.minecraft-servers
+          sops-nix.nixosModules.sops
         ];
       };
 
@@ -28,6 +33,7 @@
           ./hosts/desktop/configuration.nix
           home-manager.nixosModules.home-manager
           qylock.nixosModules.default
+          sops-nix.nixosModules.sops
         ];
       };
 
@@ -38,6 +44,7 @@
           ./hosts/laptop/configuration.nix
           home-manager.nixosModules.home-manager
           qylock.nixosModules.default
+          sops-nix.nixosModules.sops
         ];
       };
     };

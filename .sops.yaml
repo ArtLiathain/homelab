@@ -1,0 +1,24 @@
+keys:
+  - &homelab age1hpkktxte6tc2pw6y0j53fpawvzaglcyp9qvgy8cn09g26mc0lalsw4jv8m
+  - &laptop  age1a3st6u06rs5tyer7rmcj8l3r6fupfhs06504zmuu3j7puuzcm3qq9hyfkv
+  - &desktop age10sg205wn7schhyvr075846nkp7qdnafnhsfmvk7np06u242kt5vq2l6w3f
+
+creation_rules:
+  - path_regex: secrets/art-password.yaml$
+    key_groups:
+      - age:
+          - *homelab
+          - *laptop
+          - *desktop
+  - path_regex: secrets/homelab.yaml$
+    key_groups:
+      - age:
+          - *homelab
+          - *laptop
+          - *desktop
+  - path_regex: secrets/seafile.env$
+    key_groups:
+      - age:
+          - *homelab
+          - *laptop
+          - *desktop

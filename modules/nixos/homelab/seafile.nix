@@ -54,9 +54,12 @@
           autoStart = true;
 
           environment = {
-            MYSQL_ROOT_PASSWORD = "CHANGE_ME_root"; # see note on secrets below
             MYSQL_LOG_CONSOLE = "true";
           };
+
+          environmentFiles = [
+            config.sops.secrets."seafile-env".path
+          ];
 
           volumes = [
             "/var/lib/seafile/mariadb:/var/lib/mysql"
@@ -101,20 +104,24 @@
 
           environment = {
             DB_HOST = "mariadb"; # resolved via Podman's container DNS
-            DB_ROOT_PASSWD = "CHANGE_ME_root"; # must match mariadb's root pw
             REDIS_HOST = "redis";
             REDIS_PORT = "6379";
             CACHE_PROVIDER = "redis";
 
             TIME_ZONE = "Etc/UTC";
             SEAFILE_ADMIN_EMAIL = "homelab@home.lab";
-            SEAFILE_ADMIN_PASSWORD = "test123"; # only used on first init
-            JWT_PRIVATE_KEY = "8ee4e99282a6fca814ae7e8d37b82f4a0baa16e03bca576af9091f080606e41b";
 
             # SEAFILE_SERVER_HOSTNAME should match whatever you'll reverse
             # proxy this behind, e.g. seafile.example.com
             SEAFILE_SERVER_HOSTNAME = "100.99.146.99:8082";
           };
+
+          # DB_ROOT_PASSWD, SEAFILE_ADMIN_PASSWORD and JWT_PRIVATE_KEY are
+          # supplied from sops (secrets/seafile.env) at /run/secrets/seafile-env
+          # rather than inlined here.
+          environmentFiles = [
+            config.sops.secrets."seafile-env".path
+          ];
 
           dependsOn = [
             "mariadb"
@@ -165,14 +172,4 @@
       '';
     };
   };
-
-  # -----------------------------------------------------------------------
-  # NOTE ON SECRETS
-  # -----------------------------------------------------------------------
-  # The CHANGE_ME_* values above land in the Nix store in plaintext, which
-  # is world-readable on most systems. Fine for a first working config /
-  # learning purposes, but before running this for real, swap these for
-  # something like agenix or sops-nix and reference the decrypted secret
-  # file path in `environment`/`environmentFiles` instead of inlining
-  # literal passwords here.
 }

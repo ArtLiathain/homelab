@@ -1,1 +1,1 @@
-# secrets/art_password is tracked in git for password hash deployment
+# sops-encrypted secrets are committed; plaintext is never stored in the repo.

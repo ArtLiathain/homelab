@@ -13,5 +13,6 @@
     ./bazarr.nix
     ./homepage.nix
     ./minecraft.nix
+    ./sops.nix
   ];
 }

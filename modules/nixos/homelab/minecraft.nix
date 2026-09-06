@@ -170,8 +170,6 @@ in
         #
         # lazymc uses RCON to gracefully stop the Minecraft server after the
         # idle timeout.
-        #
-        # TODO: move to a proper secret-management solution (agenix, sops-nix).
         # ---------------------------------------------------------------------
 
         enable-rcon = true;
