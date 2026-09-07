@@ -9,7 +9,6 @@ in
     ports = [ "0.0.0.0:7777:7777" ];
     volumes = [ "/srv/terraria/data:/data" ];
     environment = {
-      DOTNET_SYSTEM_GLOBALIZATION_INVARIANT = "1";
       TMOD_AUTOSAVE_INTERVAL = "10";
       TMOD_MOTD = "Welcome!";
       TMOD_PASS = "N/A"; # open server (no join password)
