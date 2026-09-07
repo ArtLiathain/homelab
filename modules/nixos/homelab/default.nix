@@ -8,6 +8,7 @@
     ./seafile.nix
     ./tdarr.nix
     ./jellyfin.nix
+    ./terraria.nix
     ./lidarr.nix
     ./jellyseerr.nix
     ./bazarr.nix
