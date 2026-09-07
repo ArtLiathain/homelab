@@ -43,7 +43,7 @@ in
       MAXPLAYERS = "8";
       MOTD = "Welcome!";
       PUID = "1000"; # art
-      PGID = "999"; # art
+      PGID = "997"; # media; 999 collides with an Alpine base group
       AUTOCREATE = "2"; # Medium
       # PASSWORD deliberately unset: image default "" means no join password.
     };
@@ -95,12 +95,11 @@ in
           src="${steamDir}/steamapps/workshop/content/${steamAppId}/$id"
           found=0
           if [ -d "$src" ]; then
-            for f in "$src"/*.tmod; do
-              if [ -f "$f" ]; then
-                cp -f "$f" "${packModsDir}/"
-                found=1
-              fi
-            done
+            latest=$(find "$src" -mindepth 1 -name '*.tmod' 2>/dev/null | sort -V | tail -n 1)
+            if [ -n "$latest" ] && [ -f "$latest" ]; then
+              cp -f "$latest" "${packModsDir}/"
+              found=1
+            fi
           fi
           if [ "$found" -eq 0 ]; then
             echo "ERROR: no .tmod downloaded for workshop id $id" >&2
