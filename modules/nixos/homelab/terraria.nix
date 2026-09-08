@@ -5,7 +5,7 @@ let
   steamAppId = "1281930"; # tModLoader
   modpack = "default";
   packModsDir = "${dataDir}/ModPacks/${modpack}/Mods";
-  tmlVersion = "2026.08.2.1";
+  tmlVersion = "2026.06.03.6";
 
   workshopIds = [
     "2669644269"
