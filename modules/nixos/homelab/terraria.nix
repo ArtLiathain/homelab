@@ -54,7 +54,7 @@ in
   # restarts on any exit (crash, OOM, graceful shutdown, etc.).
   systemd.services.podman-terraria.serviceConfig = {
     Restart = lib.mkForce "always";
-    RestartSec = 5;
+    RestartSec = 60;
   };
 
   # Download mods from the Steam Workshop on the host with steamcmd, stage
