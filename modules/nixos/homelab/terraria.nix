@@ -105,7 +105,7 @@ in
             # TML channel so we never stage a mod built for a newer tModLoader;
             # fall back to the oldest branch if none qualifies.
             branch=$(find "$src" -mindepth 1 -maxdepth 1 -type d \
-                -name '[0-9][0-9][0-9][0-9]\.[0-9]*' 2>/dev/null | sort -V | awk -v t="$target" '
+                -name '[0-9][0-9][0-9][0-9]\.[0-9]*' 2>/dev/null | sort -V | ${pkgs.gawk}/bin/awk -v t="$target" '
                   BEGIN { split(t, a, "."); ty=a[1]+0; tm=a[2]+0; keep="" }
                   { split($0, p, "/"); v=p[length(p)]; split(v, d, ".");
                     if (length(d) >= 2 && (d[1]+0 < ty || (d[1]+0 == ty && d[2]+0 <= tm))) keep=$0 }
