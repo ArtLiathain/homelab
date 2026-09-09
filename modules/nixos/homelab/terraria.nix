@@ -29,6 +29,10 @@ let
   ];
 
   downloadArgs = lib.concatMapStringsSep " " (id: "+workshop_download_item ${steamAppId} ${id}") workshopIds;
+
+  # tModLoader branch channel the server runs (e.g. 2026.06.3.6 -> "2026.06");
+  # mod builds are pinned to branches at or below this.
+  targetChannel = lib.concatStringsSep "." (lib.take 2 (lib.splitString "." tmlVersion));
 in
 {
   virtualisation.oci-containers.containers.terraria = {
@@ -91,18 +95,35 @@ in
           +quit
 
         rm -f "${packModsDir}"/*.tmod
+        target=${targetChannel}
         for id in ${lib.concatStringsSep " " workshopIds}; do
           src="${steamDir}/steamapps/workshop/content/${steamAppId}/$id"
           found=0
           if [ -d "$src" ]; then
-            latest=$(find "$src" -mindepth 1 -name '*.tmod' 2>/dev/null | sort -V | tail -n 1)
-            if [ -n "$latest" ] && [ -f "$latest" ]; then
-              cp -f "$latest" "${packModsDir}/"
-              found=1
+            # Workshop items store one build per tModLoader branch (directories
+            # named like 2026.6). Pick the newest branch at or below the server's
+            # TML channel so we never stage a mod built for a newer tModLoader;
+            # fall back to the oldest branch if none qualifies.
+            branch=$(find "$src" -mindepth 1 -maxdepth 1 -type d \
+                -name '[0-9][0-9][0-9][0-9]\.[0-9]*' 2>/dev/null | sort -V | awk -v t="$target" '
+                  BEGIN { split(t, a, "."); ty=a[1]+0; tm=a[2]+0; keep="" }
+                  { split($0, p, "/"); v=p[length(p)]; split(v, d, ".");
+                    if (length(d) >= 2 && (d[1]+0 < ty || (d[1]+0 == ty && d[2]+0 <= tm))) keep=$0 }
+                  END { print keep }')
+            if [ -z "$branch" ]; then
+              branch=$(find "$src" -mindepth 1 -maxdepth 1 -type d \
+                  -name '[0-9][0-9][0-9][0-9]\.[0-9]*' 2>/dev/null | sort -V | head -n 1)
+            fi
+            if [ -n "$branch" ]; then
+              tmod=$(find "$branch" -maxdepth 1 -type f -name '*.tmod' 2>/dev/null | head -n 1)
+              if [ -n "$tmod" ] && [ -f "$tmod" ]; then
+                cp -f "$tmod" "${packModsDir}/"
+                found=1
+              fi
             fi
           fi
           if [ "$found" -eq 0 ]; then
-            echo "ERROR: no .tmod downloaded for workshop id $id" >&2
+            echo "ERROR: no .tmod downloaded for workshop id $id (need TML <= ${targetChannel})" >&2
             exit 1
           fi
         done
