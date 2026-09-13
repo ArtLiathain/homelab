@@ -75,12 +75,18 @@ in
           extraOptions = [ "--shm-size=256m" ];
           cmd = [
             "postgres"
-            "-c" "wal_level=logical"
-            "-c" "shared_buffers=256MB"
-            "-c" "effective_cache_size=768MB"
-            "-c" "work_mem=8MB"
-            "-c" "random_page_cost=1.1"
-            "-c" "max_connections=30"
+            "-c"
+            "wal_level=logical"
+            "-c"
+            "shared_buffers=256MB"
+            "-c"
+            "effective_cache_size=768MB"
+            "-c"
+            "work_mem=8MB"
+            "-c"
+            "random_page_cost=1.1"
+            "-c"
+            "max_connections=30"
           ];
 
           # No host port: only the stack needs it.
@@ -97,8 +103,10 @@ in
           # box and evict LRU rather than blocking new writes.
           cmd = [
             "redis-server"
-            "--maxmemory" "1gb"
-            "--maxmemory-policy" "volatile-lru"
+            "--maxmemory"
+            "1gb"
+            "--maxmemory-policy"
+            "volatile-lru"
           ];
         };
 
@@ -280,8 +288,8 @@ in
   systemd.tmpfiles.rules = [
     "d /var/lib/wger 0755 root root -"
     "d /var/lib/wger/postgres 0700 root root -"
-    "d /var/lib/wger/static 0750 1000 1000 -"
-    "d /var/lib/wger/media 0750 1000 1000 -"
+    "d /var/lib/wger/static 0755 1000 1000 -"
+    "d /var/lib/wger/media 0755 1000 1000 -"
     "d /var/lib/wger/beat 0750 1000 1000 -"
   ];
 
