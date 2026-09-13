@@ -18,6 +18,14 @@
       sopsFile = ../../../secrets/seafile.env;
       format = "dotenv";
     };
+    # Wger's complete runtime environment is a single dotenv file loaded via
+    # environmentFiles by every wger container (see wger.nix). It mirrors the
+    # upstream prod.env with the secrets (SECRET_KEY, JWT keys, DB passwords)
+    # plus infra-coupled values (container DNS names, SITE_URL) in one place.
+    "wger-env" = {
+      sopsFile = ../../../secrets/wger.env;
+      format = "dotenv";
+    };
   };
 
   sops.templates."homepage-env" = {

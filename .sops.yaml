@@ -22,3 +22,9 @@ creation_rules:
           - *homelab
           - *laptop
           - *desktop
+  - path_regex: secrets/wger.env$
+    key_groups:
+      - age:
+          - *homelab
+          - *laptop
+          - *desktop

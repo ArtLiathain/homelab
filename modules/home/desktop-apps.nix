@@ -58,7 +58,7 @@
     prusa-slicer
     ghostscript
     ffmpeg
-    notion-app-enhanced
+    chromium
 
     # Seafile CLI
     seafile-shared
@@ -90,5 +90,14 @@
     # Theming dependencies
     adwaita-qt6
   ];
+
+  xdg.desktopEntries.notion = {
+    name = "Notion";
+    comment = "Notion workspace";
+    exec = "chromium --app=https://www.notion.so";
+    icon = "chromium";
+    terminal = false;
+    categories = [ "Office" ];
+  };
 
 }

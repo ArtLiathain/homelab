@@ -13,6 +13,7 @@
     ./jellyseerr.nix
     ./bazarr.nix
     ./homepage.nix
+    ./wger.nix
     ./sops.nix
   ];
 }

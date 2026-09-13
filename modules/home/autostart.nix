@@ -5,6 +5,7 @@ let
     { id = "brave"; name = "Brave Browser"; pkg = pkgs.brave; bin = "brave"; }
     { id = "vesktop"; name = "Vesktop"; pkg = pkgs.vesktop; bin = "vesktop"; }
     { id = "obsidian"; name = "Obsidian"; pkg = pkgs.obsidian; bin = "obsidian"; }
+    { id = "notion"; name = "Notion"; pkg = pkgs.notion; bin = "notion"; }
   ];
 
   startTerminalGUIs = pkgs.writeShellScript "start-terminal-guis" ''
