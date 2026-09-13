@@ -242,8 +242,11 @@ in
       Type = "oneshot";
       RemainAfterExit = true;
     };
+    # Runs as the image's default user (wger): the image installs Django via
+    # `pip install --user` into /home/wger/.local, so exec'ing as root (HOME=/root)
+    # cannot import the app.
     script = ''
-      ${podmanBin} exec --user 0:0 wger-web python3 manage.py setup-powersync-storage
+      ${podmanBin} exec wger-web python3 manage.py setup-powersync-storage
     '';
   };
 
