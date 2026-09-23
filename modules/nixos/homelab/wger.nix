@@ -287,7 +287,7 @@ in
   # wger user (uid 1000); the postgres entrypoint chowns its own PGDATA.
   systemd.tmpfiles.rules = [
     "d /var/lib/wger 0755 root root -"
-    "d /var/lib/wger/postgres 0700 root root -"
+    "d /var/lib/wger/postgres 0700 70 70 -"
     "d /var/lib/wger/static 0755 1000 1000 -"
     "d /var/lib/wger/media 0755 1000 1000 -"
     "d /var/lib/wger/beat 0750 1000 1000 -"
