@@ -1,4 +1,9 @@
-{ pkgs, ... }: {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
   home.sessionVariables = {
     GTK_THEME = "Adwaita:dark";
   };
@@ -94,10 +99,13 @@
   xdg.desktopEntries.notion = {
     name = "Notion";
     comment = "Notion workspace";
-    exec = "chromium --app=https://www.notion.so";
+    exec = "${lib.getExe pkgs.chromium} --user-data-dir=${config.home.homeDirectory}/.config/notion-chromium --class=Notion --app=https://www.notion.so";
     icon = "chromium";
     terminal = false;
     categories = [ "Office" ];
+    settings = {
+      StartupWMClass = "Notion";
+    };
   };
 
 }

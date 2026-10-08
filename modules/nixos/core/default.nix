@@ -27,8 +27,8 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "nodev";
   boot.loader.grub.efiSupport = true;
-  boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.useOSProber = true;
+  boot.loader.efi.canTouchEfiVariables = true;
   programs.nix-ld.enable = true;
 
   services.openssh = {
